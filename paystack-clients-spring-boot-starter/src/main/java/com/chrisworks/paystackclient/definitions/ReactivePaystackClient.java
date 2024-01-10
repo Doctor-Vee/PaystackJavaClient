@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public interface ReactivePaystackClient {
 
     ApplePayClient applePay();
+    CustomerClient customer();
     PlanClient plan();
     ProductClient product();
     SubAccountClient subAccount();
@@ -17,6 +18,6 @@ public interface ReactivePaystackClient {
     @Component(value = "reactivePaystackClient")
     @Conditional(NoClientIsSelectedToBeActive.class)
     @ConditionalOnProperty(prefix = "paystack-client", name = "definition-type", havingValue = "REACTIVE")
-    record Impl(ApplePayClient applePay, PlanClient plan, ProductClient product,
+    record Impl(ApplePayClient applePay, CustomerClient customer, PlanClient plan, ProductClient product,
                 SubAccountClient subAccount, TransactionClient transaction) implements ReactivePaystackClient {}
 }

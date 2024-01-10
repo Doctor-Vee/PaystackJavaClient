@@ -4,6 +4,7 @@ import com.chrisworks.paystackclient.definitions.Constants;
 
 public enum SupportedClient {
     APPLE_PAY(Constants.APPLE_PAY_CLIENT),
+    CUSTOMER(Constants.CUSTOMER_CLIENT),
     PLAN(Constants.PLAN_CLIENT),
     PRODUCT(Constants.PRODUCT_CLIENT),
     SUB_ACCOUNT(Constants.SUB_ACCOUNT_CLIENT),

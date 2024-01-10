@@ -26,8 +26,8 @@ public interface TransactionClient {
 
     @GetExchange
     Mono<TransactionResponse.Multiple> listTransaction(
-            @RequestParam(name = QueryParamConstants.PAGE) @NonNull BigInteger page,
-            @RequestParam(name = QueryParamConstants.PER_PAGE) @NonNull BigInteger perPage,
+            @RequestParam(name = QueryParamConstants.PAGE, required = false, defaultValue = "1") @NonNull BigInteger page,
+            @RequestParam(name = QueryParamConstants.PER_PAGE, required = false, defaultValue = "50") @NonNull BigInteger perPage,
             @RequestParam(name = QueryParamConstants.CUSTOMER, required = false) BigInteger customer,
             @RequestParam(name = QueryParamConstants.TERMINAL_ID, required = false) String terminalId,
             @RequestParam(name = QueryParamConstants.STATUS, required = false) String status,
@@ -36,6 +36,9 @@ public interface TransactionClient {
             @RequestParam(name = QueryParamConstants.AMOUNT, required = false) String amount
 
     );
+
+    @GetExchange
+    Mono<TransactionResponse.Multiple> listTransaction();
 
     @GetExchange("/{id}")
     Mono<TransactionResponse.Single> fetchTransaction(@PathVariable BigInteger id);
@@ -48,16 +51,19 @@ public interface TransactionClient {
 
     @GetExchange("/totals")
     Mono<TransactionTotalResponse.Single> transactionTotals(
-            @RequestParam(name = QueryParamConstants.PAGE) @NonNull BigInteger page,
-            @RequestParam(name = QueryParamConstants.PER_PAGE) @NonNull BigInteger perPage,
+            @RequestParam(name = QueryParamConstants.PAGE, required = false, defaultValue = "1") @NonNull BigInteger page,
+            @RequestParam(name = QueryParamConstants.PER_PAGE, required = false, defaultValue = "50") @NonNull BigInteger perPage,
             @RequestParam(name = QueryParamConstants.FROM, required = false) ZonedDateTime from,
             @RequestParam(name = QueryParamConstants.TO, required = false) ZonedDateTime to
     );
 
+    @GetExchange("/totals")
+    Mono<TransactionTotalResponse.Single> transactionTotals();
+
     @GetExchange("/export")
     Mono<ExportTransactionResponse.Single> exportTransactions(
-            @RequestParam(name = QueryParamConstants.PAGE) @NonNull BigInteger page,
-            @RequestParam(name = QueryParamConstants.PER_PAGE) @NonNull BigInteger perPage,
+            @RequestParam(name = QueryParamConstants.PAGE, required = false, defaultValue = "1") @NonNull BigInteger page,
+            @RequestParam(name = QueryParamConstants.PER_PAGE, required = false, defaultValue = "50") @NonNull BigInteger perPage,
             @RequestParam(name = QueryParamConstants.FROM, required = false) ZonedDateTime from,
             @RequestParam(name = QueryParamConstants.TO, required = false) ZonedDateTime to,
             @RequestParam(name = QueryParamConstants.CUSTOMER, required = false) BigInteger customer,
@@ -69,6 +75,9 @@ public interface TransactionClient {
             @RequestParam(name = QueryParamConstants.PAYMENT_PAGE, required = false) BigInteger paymentPage
 
     );
+
+    @GetExchange("/export")
+    Mono<ExportTransactionResponse.Single> exportTransactions();
 
     @PostExchange("/partial_debit")
     Mono<TransactionTotalResponse.Single> partialDebit(@RequestBody PartialDebitRequest body);

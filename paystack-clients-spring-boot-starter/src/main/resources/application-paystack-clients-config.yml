@@ -41,6 +41,12 @@ http:
         Content-Type: ${CONTENT_TYPE}
         Authorization: ${AUTHORIZATION}
 
+    customer-client:
+      url: "${BASE_URL}/customer"
+      headers:
+        Content-Type: ${CONTENT_TYPE}
+        Authorization: ${AUTHORIZATION}
+
     sub-account-client:
       url: "${BASE_URL}/subaccount"
       headers:

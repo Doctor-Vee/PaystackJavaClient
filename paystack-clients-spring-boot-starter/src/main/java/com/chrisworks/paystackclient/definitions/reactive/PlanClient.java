@@ -25,12 +25,15 @@ public interface PlanClient {
 
     @GetExchange
     Mono<PlanResponse.Multiple> listPlans(
-            @RequestParam(name = QueryParamConstants.PAGE) @NonNull BigInteger page,
-            @RequestParam(name = QueryParamConstants.PER_PAGE) @NonNull BigInteger perPage,
+            @RequestParam(name = QueryParamConstants.PAGE, required = false, defaultValue = "1") @NonNull BigInteger page,
+            @RequestParam(name = QueryParamConstants.PER_PAGE, required = false, defaultValue = "50") @NonNull BigInteger perPage,
             @RequestParam(name = QueryParamConstants.STATUS, required = false) String status,
             @RequestParam(name = QueryParamConstants.INTERVAL, required = false) String interval,
             @RequestParam(name = QueryParamConstants.AMOUNT, required = false) String amount
     );
+
+    @GetExchange
+    Mono<PlanResponse.Multiple> listPlans();
 
     @GetExchange("/{idOrCode}")
     Mono<PlanResponse.Single> fetchPlan(@PathVariable String idOrCode);

@@ -26,11 +26,14 @@ public interface SubAccountClient {
 
     @GetExchange
     Mono<SubAccountResponse.Multiple> listSubAccounts(
-            @RequestParam(name = QueryParamConstants.PAGE) @NonNull BigInteger page,
-            @RequestParam(name = QueryParamConstants.PER_PAGE) @NonNull BigInteger perPage,
+            @RequestParam(name = QueryParamConstants.PAGE, required = false, defaultValue = "1") @NonNull BigInteger page,
+            @RequestParam(name = QueryParamConstants.PER_PAGE, required = false, defaultValue = "50") @NonNull BigInteger perPage,
             @RequestParam(name = QueryParamConstants.FROM, required = false) ZonedDateTime from,
             @RequestParam(name = QueryParamConstants.TO, required = false) ZonedDateTime to
     );
+
+    @GetExchange
+    Mono<SubAccountResponse.Multiple> listSubAccounts();
 
     @GetExchange("/{idOrCode}")
     Mono<SubAccountResponse.Single> fetchSubAccount(@PathVariable String idOrCode);

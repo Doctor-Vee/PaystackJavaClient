@@ -24,11 +24,14 @@ public interface ProductClient {
 
     @GetExchange
     ProductResponse.Multiple listProducts(
-            @RequestParam(name = QueryParamConstants.PAGE) @NonNull BigInteger page,
-            @RequestParam(name = QueryParamConstants.PER_PAGE) @NonNull BigInteger perPage,
-            @RequestParam(name = QueryParamConstants.FROM, required = false)ZonedDateTime from,
-            @RequestParam(name = QueryParamConstants.TO, required = false)ZonedDateTime to
+            @RequestParam(name = QueryParamConstants.PAGE, required = false, defaultValue = "1") @NonNull BigInteger page,
+            @RequestParam(name = QueryParamConstants.PER_PAGE, required = false, defaultValue = "50") @NonNull BigInteger perPage,
+            @RequestParam(name = QueryParamConstants.FROM, required = false) ZonedDateTime from,
+            @RequestParam(name = QueryParamConstants.TO, required = false) ZonedDateTime to
     );
+
+    @GetExchange
+    ProductResponse.Multiple listProducts();
 
     @GetExchange("/{id}")
     ProductResponse.Single fetchProduct(@PathVariable String id);
