@@ -4,7 +4,7 @@
     <groupId>com.chrisworks.paystackclient</groupId>
     <artifactId>paystack-clients</artifactId>
     <name>paystack-clients</name>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

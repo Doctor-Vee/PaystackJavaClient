@@ -31,12 +31,34 @@ The Client comes in 3 flavors:
     <version>${VERSION}</version>
 </dependency>
 ```
+- Add the following property to your configuration file:
+  - `applications.properties` file
+    ```properties
+    paystack-client.secret-key=INPUT_YOUR_PAYSTACK_SECRET_KEY_HERE
+    paystack-client.definition-type=(REACTIVE|NON_REACTIVE) #This property is optional, it defaults to 'NON_REACTIVE' if not specified
+    paystack-client.activate-only-clients=apple_pay, customer, plan, transaction #Used to specify only the clients you want to be initialized
+    ```
 
-- Add the following property to you `applications.properties` file
-```properties
-paystack-client.secret-key=INPUT_YOUR_PAYSTACK_SECRET_KEY_HERE
-paystack-client.definition-type=(REACTIVE|NON_REACTIVE) #This property is optional, it defaults to 'NON_REACTIVE' if not specified
-```
+  - `applications.yaml` file
+    ```yaml
+    paystack-client:
+      secret-key: INPUT_YOUR_PAYSTACK_SECRET_KEY_HERE
+      definition-type: (REACTIVE|NON_REACTIVE) #This property is optional, it defaults to 'NON_REACTIVE' if not specified
+      activate-only-clients: apple_pay, customer, plan, transaction #This is optional, it is used to specify only the clients you want to be initialized
+    ```
+> 1. When the property `paystack-client.activate-only-clients` is set, only the clients listed in this array will be instantiated
+during autoconfiguration execution, See full list of possible values
+[Here](paystack-clients-spring-boot-starter/src/main/java/com/chrisworks/paystackclient/SupportedClient.java).
+This means that only these listed webclient bean(s) are available in the application's 
+context to be injected. By listing clients you're interested in, you loose the power to inject the 
+`SimplePaystackClient`/`ReactivePaystackClient` which is an aggregation of all the individual webclient beans in the context.
+
+
+> 2. The property `paystack-client.definition-type` controls what kind (reactive or non-reactive) of webclient bean will be initialized during autoconfiguration.
+Hence, it determines the location of the bean(s) (the packages holding the beans) you can use (inject) within your application logic. When the value is set to `REACTIVE`,
+then you can inject clients from the package `com.chrisworks.paystackclient.definitions.reactive.*`, also the aggregate bean
+`ReactivePaystackClient` will be available to you. In the case where the property is set to `NON_REACTIVE`, then you can inject
+clients from the package `com.chrisworks.paystackclient.definitions.simple.*`, also `SimplePaystackClient` bean will be available.
 
 - Usage
 ```java
